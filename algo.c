@@ -314,7 +314,14 @@ int TSP(int* arr, int len, pnode head)
     memcpy(tempArr, arr, sizeof(int) * len);
     int bestW = -1;
     permute(arr, 0, len - 1, len, tempArr, &bestW, mat);
+    
     free(tempArr);
+    for (int i = 0; i < max; i++)
+	{
+		free(mat[i]);
+	}
+	free(mat);
+
 	return (bestW);
 }
 
