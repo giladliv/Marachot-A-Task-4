@@ -3,11 +3,8 @@
 //
 #ifndef ALGO_H
 #define ALGO_H
-#include <corecrt.h>
-#include <mmcobj.h>
 #include "graph.h"
-#include<stdio.h>
-#include<conio.h>
+#include <stdio.h>
 #include <malloc.h>
 
 void build_graph_cmd(pnode* head);

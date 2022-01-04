@@ -21,19 +21,19 @@ int main()
         {
             case 'A':             /**when 'A' is chosen run function (1) - create graph*/
 				build_graph_cmd(&nodesList);
-				print_graph(nodesList);
+				//print_graph(nodesList);
                 break;
             case 'n':             /**when 'n' - create node**/
 				insert_node_cmd(&nodesList, 0);
-				print_graph(nodesList);
+				//print_graph(nodesList);
                 break;
             case 'B':            /**when 'B' is chosen run function (2) - create new node**/
 				insert_node_cmd(&nodesList, 1);
-				print_graph(nodesList);
+				//print_graph(nodesList);
                 break;
             case 'D':            /**when 'D' is chosen run function (2) - delete node**/
 				delete_node_cmd(&nodesList);
-				print_graph(nodesList);
+				//print_graph(nodesList);
                 break;
             case 'S':            /**when 'S' is chosen run function (3) - get the length of shortest path**/
                 shortsPath_S_cmd(&nodesList);
