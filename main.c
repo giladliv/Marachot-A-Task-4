@@ -3,13 +3,11 @@
 //
 #include "algo.h"
 
-// T 3 2 1 3 S 2 0 S 5 2
 
 int main()
 {
     char ch = '0';
     pnode nodesList = NULL;
-    int nodeNum = 0, counter = 0;
     // do-while for all the cases
     do
     {
@@ -22,16 +20,11 @@ int main()
         switch (ch)
         {
             case 'A':             /**when 'A' is chosen run function (1) - create graph*/
-				nodeNum = build_graph_cmd(&nodesList);
-                counter = 0;
+				build_graph_cmd(&nodesList);
 				//print_graph(nodesList);
                 break;
             case 'n':             /**when 'n' - create node**/
-				if (counter < nodeNum)
-                {
-                    insert_node_cmd(&nodesList, 0);
-                    counter++;
-                }
+				insert_node_cmd(&nodesList, 0);
 				//print_graph(nodesList);
                 break;
             case 'B':            /**when 'B' is chosen run function (2) - create new node**/

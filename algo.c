@@ -3,20 +3,15 @@
 /** CASES FOR MAIN **/
 
 
-int build_graph_cmd(pnode* head)
+void build_graph_cmd(pnode* head)
 {
     int num = 0;
     int flag = 0;
     flag = scanf("%d", &num);
     if (flag != EOF && flag != 0)
     {
-        if (head != NULL)
-        {
-            delete_graph(head);
-        }
-        return num;
+        build_graph(head, num);
     }
-    return 0;
 }
 
 void insert_node_cmd(pnode* head, int isB)

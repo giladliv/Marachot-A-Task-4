@@ -71,6 +71,18 @@ void delete_edges(pnode head)
 }
 
 
+void build_graph(pnode* head, int n)
+{
+	if (head != NULL)
+	{
+		delete_graph(head);
+		for (int i = 0; i < n; i++)
+		{
+			insert_node(i, head);
+		}
+	}
+}
+
 void insert_node(int id, pnode* head)
 {
 	if (*head == NULL)

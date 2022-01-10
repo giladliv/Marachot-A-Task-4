@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <malloc.h>
 
-int build_graph_cmd(pnode* head);
+void build_graph_cmd(pnode* head);
 void insert_node_cmd(pnode* head, int isB);
 void delete_node_cmd(pnode* head);
 void shortsPath_S_cmd(pnode* head);
