@@ -70,7 +70,6 @@ void delete_edges(pnode head)
 	}
 }
 
-
 void build_graph(pnode* head, int n)
 {
 	if (head != NULL)
