@@ -34,8 +34,6 @@ typedef struct path
 
 typedef pnode* GRAPH_NODE;
 
-void build_graph(pnode* head, int n);
-
 pnode new_node(int id, pnode next);	//
 pnode find(int id, pnode head);	//
 void insert_node(int data, pnode* head);

@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <malloc.h>
 
-void build_graph_cmd(pnode* head);
+int build_graph_cmd(pnode* head);
 void insert_node_cmd(pnode* head, int isB);
 void delete_node_cmd(pnode* head);
 void shortsPath_S_cmd(pnode* head);
@@ -23,6 +23,7 @@ int getLenOfPoints(pnode head);
 int getMaxNode(pnode head);
 int TSP(int* arr, int len, pnode head);
 void swap(int* x, int* y);
-void permute(int* a, int l, int r, int len, int* bestP, int* bestW, int** mat);
+void permute(int* a, int l, int r, int len, int* bestW, int** mat);
+int sumRoute(int* nodes, int len, int** shortest);
 
 #endif // ALGO_H

@@ -2,7 +2,7 @@
 
 pnode new_node(int id, pnode next)
 {
-	node* p = (node*)malloc(sizeof(node));
+	pnode p = (pnode)malloc(sizeof(node));
 	p->id = id;
 	p->edges = NULL;
 	p->next = next;
@@ -26,7 +26,7 @@ pnode find(int id, pnode head)
 
 pedge new_edge(int w, pnode pdest, pedge next)
 {
-	edge* p = (edge*)malloc(sizeof(edge));
+	pedge p = (pedge)malloc(sizeof(edge));
 	p->weight = w;
 	p->dst = pdest;
 	p->next = next;
@@ -63,24 +63,13 @@ void delete_edges(pnode head)
 		{
 			pedge currEdge = head->edges;
 			head->edges = head->edges->next;
+			currEdge->dst = NULL;
 			currEdge->next = NULL;
 			free(currEdge);
 		}
 	}
 }
 
-
-void build_graph(pnode* head, int n)
-{
-	if (head != NULL)
-	{
-		delete_graph(head);
-		for (int i = 0; i < n; i++)
-		{
-			insert_node(i, head);
-		}
-	}
-}
 
 void insert_node(int id, pnode* head)
 {
@@ -112,22 +101,19 @@ void delete_node(int data, pnode* head)
 		else
 		{
 			currNode = (*head);
+			pnode temp = NULL;
 			while (currNode->next != NULL)
 			{
 				if (currNode->next->id == data)
 				{
-					pnode temp = currNode->next;
+					temp = currNode->next;
 					currNode->next = currNode->next->next;
-					currNode = temp;
 					break;
 				}
 				currNode = currNode->next;
 			}
 
-			if (currNode->next == NULL)
-			{
-				currNode = NULL;
-			}
+			currNode = (temp != NULL) ? temp : NULL;
 		}
 
 		if (currNode != NULL)
@@ -141,7 +127,7 @@ void delete_node(int data, pnode* head)
 
 void delete_graph(pnode* head)
 {
-	while (*head)
+	while (*head != NULL)
 	{
 		delete_node((*head)->id, head);
 	}

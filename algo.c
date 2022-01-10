@@ -1,20 +1,22 @@
-//
-// Created by batel on 30/12/2021.
-//
+
 #include "algo.h"
 /** CASES FOR MAIN **/
 
-void build_graph_cmd(pnode* head)
+
+int build_graph_cmd(pnode* head)
 {
     int num = 0;
     int flag = 0;
     flag = scanf("%d", &num);
     if (flag != EOF && flag != 0)
     {
-        //printf("%d ", num);
-        //node* list = (node*)malloc(sizeof(node));
-        build_graph(head, num);
+        if (head != NULL)
+        {
+            delete_graph(head);
+        }
+        return num;
     }
+    return 0;
 }
 
 void insert_node_cmd(pnode* head, int isB)
@@ -96,13 +98,13 @@ void TSP_cmd(pnode head)
 		return;
 	}
 
-	int* nodes = (int*)calloc(len, sizeof(int));
+	int* nodes = (int*)malloc(len*sizeof(int));
+    //int nodes[3] = {0};
 	for (int i = 0; i < len; i++)
 	{
 		if (scanf("%d", &nodes[i]) == EOF)
 		{
-			free(nodes);
-			return;
+			break;
 		}
 	}
 
@@ -166,7 +168,7 @@ path* dijkstra(int src, int dest, pnode head)
 
     path* paths = (path*)calloc(len, sizeof(path));
     pnode curr = head;
-    pnode Q = NULL;
+    node* Q = NULL;
 
     while (curr)
     {
@@ -178,13 +180,13 @@ path* dijkstra(int src, int dest, pnode head)
         curr = curr->next;
     }
 
-    while (Q)
+    while (Q != NULL)
     {
         int uInd = Q->id;
         int bestV = paths[uInd].dist;
         curr = Q;
 
-        while (curr)
+        while (curr != NULL)
         {
             int i = curr->id;
             if (bestV < 0 && paths[i].dist >= 0)
@@ -202,7 +204,7 @@ path* dijkstra(int src, int dest, pnode head)
             }
             curr = curr->next;
         }
-
+        
         if (uInd == dest)
         {
             delete_graph(&Q);
@@ -286,6 +288,7 @@ void shortsPathAllNodes(int src, int dest, pnode head)
 int TSP(int* arr, int len, pnode head)
 {
     int max = 0;
+    int** mat = NULL;
     for (int i = 0; i < len; i++)
     {
         if (arr[i] > max)
@@ -295,30 +298,27 @@ int TSP(int* arr, int len, pnode head)
     }
     max += 1;
 
-    int** mat = (int**)malloc(max*sizeof(int*));
+    mat = (int**)calloc(max, sizeof(int*));
     for (int i = 0; i < max; i++)
     {
-        mat[i] = (int*)malloc(max*sizeof(int));
+        mat[i] = (int*)calloc(max, sizeof(int));
     }
+    //int mat[3][3] = {0};
 
     for (int i = 0; i < len; i++)
     {
         for (int j = 0; j < len; j++)
         {
-			//printf("%d %d\n", arr[i], arr[j]);
 			mat[arr[i]][arr[j]] = shortestPath(arr[i], arr[j], head);
         }
     }
 
-    int* tempArr = (int*)malloc(sizeof(int) * len);
-    memcpy(tempArr, arr, sizeof(int) * len);
     int bestW = -1;
-    permute(arr, 0, len - 1, len, tempArr, &bestW, mat);
+    permute(arr, 0, len - 1, len, &bestW, mat);
     
-    free(tempArr);
     for (int i = 0; i < max; i++)
 	{
-		free(mat[i]);
+        free(mat[i]);
 	}
 	free(mat);
 
@@ -327,6 +327,11 @@ int TSP(int* arr, int len, pnode head)
 
 int shortestPath(int src, int dest, pnode head)
 {
+    if (src == dest && find(src, head))
+    {
+        return (0);
+    }
+    
     path* paths = dijkstra(src, dest, head);
     if (paths == NULL)
     {
@@ -339,7 +344,7 @@ int shortestPath(int src, int dest, pnode head)
     return (w);
 }
 
-int sumRoute(int nodes[], int len, int** shortest)
+int sumRoute(int* nodes, int len, int** shortest)
 {
     int sum = 0;
 
@@ -355,7 +360,7 @@ int sumRoute(int nodes[], int len, int** shortest)
     return (sum);
 }
 
-void permute(int* a, int l, int r, int len, int* bestP, int* bestW, int** mat)
+void permute(int* a, int l, int r, int len, int* bestW, int** mat)
 {
     if (l == r)
     {
@@ -363,12 +368,10 @@ void permute(int* a, int l, int r, int len, int* bestP, int* bestW, int** mat)
         if (*bestW < 0 && sum >= 0)
         {
             *bestW = sum;
-            memcpy(bestP, a, sizeof(int) * len);
         }
         else if (*bestW >= 0 && sum >= 0 && sum < *bestW)
         {
             *bestW = sum;
-            memcpy(bestP, a, sizeof(int) * len);
         }
     }
     else
@@ -376,8 +379,8 @@ void permute(int* a, int l, int r, int len, int* bestP, int* bestW, int** mat)
         for (int i = l; i <= r; i++)
         {
             swap((a + l), (a + i));
-            permute(a, l + 1, r, len, bestP, bestW, mat);
-            swap((a + l), (a + i)); //backtrack
+            permute(a, l + 1, r, len, bestW, mat);
+            swap((a + l), (a + i));
         }
     }
 }
